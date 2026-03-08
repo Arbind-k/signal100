@@ -1,0 +1,9 @@
+data/
+signal100.db
+models/*.pkl
+venv/
+Backend/venv/
+__pycache__/
+Backend/__pycache__/
+*.pyc
+.DS_Store

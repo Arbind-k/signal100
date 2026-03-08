@@ -2,10 +2,12 @@ from pathlib import Path
 import pandas as pd
 
 from database import init_db, get_connection
-from feature_engineering import add_features
+from feature_engineering import add_features, merge_external_features
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 RAW_DATA_DIR = BASE_DIR / "data" / "raw"
+FUNDAMENTALS_PATH = BASE_DIR / "data" / "fundamentals_peg.csv"
+FILINGS_PATH = BASE_DIR / "data" / "quarterly_filings.csv"
 
 EXPECTED_FINAL_COLUMNS = ["ticker", "date", "open", "high", "low", "close", "volume"]
 
@@ -19,13 +21,10 @@ def clean_single_stock_file(file_path: Path) -> pd.DataFrame:
     # row 2+ = actual data
     df = raw_df.iloc[2:].copy().reset_index(drop=True)
 
-    # Expected raw columns after import:
-    # Price, Close, High, Low, Open, Volume
     df.columns = ["date", "close", "high", "low", "open", "volume"]
 
     ticker = file_path.stem.upper()
     df["ticker"] = ticker
-
     df = df[["ticker", "date", "open", "high", "low", "close", "volume"]]
 
     df["date"] = pd.to_datetime(df["date"], errors="coerce")
@@ -37,12 +36,11 @@ def clean_single_stock_file(file_path: Path) -> pd.DataFrame:
     df = df.dropna(subset=EXPECTED_FINAL_COLUMNS)
     df = df.sort_values("date")
     df = df.drop_duplicates(subset=["ticker", "date"])
-
     return df
 
 
 def load_all_stock_files() -> pd.DataFrame:
-    csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))[:100]
+    csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))[:25]
     if not csv_files:
         raise FileNotFoundError(f"No CSV files found in {RAW_DATA_DIR}")
 
@@ -63,10 +61,33 @@ def load_all_stock_files() -> pd.DataFrame:
     return df
 
 
+def load_external_data() -> tuple[pd.DataFrame | None, pd.DataFrame | None]:
+    fundamentals_df = None
+    filings_df = None
+
+    if FUNDAMENTALS_PATH.exists():
+        fundamentals_df = pd.read_csv(FUNDAMENTALS_PATH)
+        print(f"Loaded fundamentals rows: {len(fundamentals_df)}")
+    else:
+        print(f"Fundamentals file not found at {FUNDAMENTALS_PATH}; continuing without it.")
+
+    if FILINGS_PATH.exists():
+        filings_df = pd.read_csv(FILINGS_PATH)
+        print(f"Loaded filings rows: {len(filings_df)}")
+    else:
+        print(f"Filings file not found at {FILINGS_PATH}; continuing without it.")
+
+    return fundamentals_df, filings_df
+
+
 def load_and_prepare_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     price_df = load_all_stock_files()
     feature_df = add_features(price_df)
-    feature_df = feature_df.dropna().reset_index(drop=True)
+
+    fundamentals_df, filings_df = load_external_data()
+    feature_df = merge_external_features(feature_df, fundamentals_df, filings_df)
+
+    feature_df = feature_df.dropna(subset=["next_day_close"]).reset_index(drop=True)
     return price_df, feature_df
 
 
@@ -87,3 +108,5 @@ if __name__ == "__main__":
     print(f"Loaded {prices['ticker'].nunique()} tickers")
     print(f"Price rows: {len(prices)}")
     print(f"Feature rows: {len(features)}")
+    print("Sample columns:")
+    print(features.columns.tolist())

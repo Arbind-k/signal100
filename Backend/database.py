@@ -52,6 +52,18 @@ def init_db():
             price_t_2 REAL,
             price_t_3 REAL,
             price_t_5 REAL,
+            pe_ratio REAL,
+            peg_ratio REAL,
+            market_cap REAL,
+            price_to_book REAL,
+            eps_ttm REAL,
+            revenue_growth REAL,
+            earnings_growth REAL,
+            filing_count_365d REAL,
+            ten_q_count_365d REAL,
+            days_since_last_filing REAL,
+            days_since_last_10q REAL,
+            recent_10q_flag REAL,
             next_day_close REAL,
             PRIMARY KEY (ticker, date)
         )

@@ -1,0 +1,286 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0b1020;
+  --panel: #121936;
+  --panel-2: #1a2347;
+  --text: #eef2ff;
+  --muted: #a7b0d6;
+  --border: rgba(255, 255, 255, 0.08);
+  --success: #16a34a;
+  --danger: #dc2626;
+  --primary: #3b82f6;
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(180deg, #09101e 0%, #0e1731 100%);
+  color: var(--text);
+}
+
+.app-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+.subtitle,
+.muted {
+  color: var(--muted);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: end;
+}
+
+.api-config {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 280px;
+}
+
+input, select, button {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+input, select {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+button {
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+button.primary {
+  background: var(--primary);
+  border-color: transparent;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+}
+
+.card {
+  grid-column: span 6;
+  background: rgba(18, 25, 54, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.summary-card,
+.metrics-card {
+  grid-column: span 6;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.stat {
+  background: var(--panel-2);
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.label {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.section-header,
+.table-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stock-list {
+  display: grid;
+  gap: 12px;
+}
+
+.stock-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  border-radius: 16px;
+}
+
+.stock-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ticker {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.small {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.return {
+  font-weight: 700;
+  font-size: 18px;
+  align-self: center;
+}
+
+.return.positive { color: #22c55e; }
+.return.negative { color: #f87171; }
+
+.pill {
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  border: 1px solid transparent;
+}
+
+.pill.success {
+  color: #bbf7d0;
+  background: rgba(22, 163, 74, 0.15);
+}
+
+.pill.danger {
+  color: #fecaca;
+  background: rgba(220, 38, 38, 0.15);
+}
+
+.metrics-content {
+  display: grid;
+  gap: 12px;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.metric-row:last-child {
+  border-bottom: none;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+th, td {
+  padding: 14px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status {
+  margin-bottom: 12px;
+}
+
+@media (max-width: 1000px) {
+  .card, .summary-card, .metrics-card {
+    grid-column: 1 / -1;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .topbar {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 14px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .toolbar input, .toolbar select {
+    width: 100%;
+  }
+}

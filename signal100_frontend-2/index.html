@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signal100 Dashboard</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>Signal100 Dashboard</h1>
+        <p class="subtitle">Stock prediction dashboard powered by your FastAPI backend.</p>
+      </div>
+      <div class="controls">
+        <label class="api-config">
+          <span>API Base URL</span>
+          <input id="apiBaseUrl" type="text" value="http://127.0.0.1:8000" />
+        </label>
+        <button id="saveApiBtn">Save API URL</button>
+        <button id="refreshPredictionsBtn" class="primary">Refresh Predictions</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card summary-card">
+        <h2>Overview</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="label">Tracked Stocks</span>
+            <span id="totalStocks" class="value">—</span>
+          </div>
+          <div class="stat">
+            <span class="label">Best Predicted Return</span>
+            <span id="bestReturn" class="value">—</span>
+          </div>
+          <div class="stat">
+            <span class="label">Worst Predicted Return</span>
+            <span id="worstReturn" class="value">—</span>
+          </div>
+          <div class="stat">
+            <span class="label">Average Confidence</span>
+            <span id="avgConfidence" class="value">—</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card metrics-card">
+        <div class="section-header">
+          <h2>Model Metrics</h2>
+          <button id="reloadMetricsBtn">Reload</button>
+        </div>
+        <div id="metricsContent" class="metrics-content">
+          <p class="muted">Loading model metrics...</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <h2>Top Winners</h2>
+          <span class="pill success">Highest predicted return</span>
+        </div>
+        <div id="winnersList" class="stock-list"></div>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <h2>Top Losers</h2>
+          <span class="pill danger">Lowest predicted return</span>
+        </div>
+        <div id="losersList" class="stock-list"></div>
+      </section>
+
+      <section class="card full-width">
+        <div class="section-header table-tools">
+          <h2>All Stocks</h2>
+          <div class="toolbar">
+            <input id="searchInput" type="search" placeholder="Search ticker..." />
+            <select id="sortSelect">
+              <option value="predicted_return_desc">Sort: Best return</option>
+              <option value="predicted_return_asc">Sort: Worst return</option>
+              <option value="ticker_asc">Sort: Ticker A–Z</option>
+              <option value="ticker_desc">Sort: Ticker Z–A</option>
+              <option value="confidence_desc">Sort: Confidence high–low</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="statusMessage" class="status muted">Loading stock predictions...</div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Current Price</th>
+                <th>Predicted Price</th>
+                <th>Predicted Return</th>
+                <th>MAE</th>
+                <th>Confidence</th>
+              </tr>
+            </thead>
+            <tbody id="stocksTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
