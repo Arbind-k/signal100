@@ -6,8 +6,8 @@ from feature_engineering import add_features, merge_external_features
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 RAW_DATA_DIR = BASE_DIR / "data" / "raw"
-FUNDAMENTALS_PATH = BASE_DIR / "data" / "fundamentals_peg.csv"
-FILINGS_PATH = BASE_DIR / "data" / "quarterly_filings.csv"
+FUNDAMENTALS_PATH = BASE_DIR / "data" / "raw" / "fundamentals_peg.csv"
+FILINGS_PATH = BASE_DIR / "data" / "raw" / "quarterly_filings.csv"
 
 EXPECTED_FINAL_COLUMNS = ["ticker", "date", "open", "high", "low", "close", "volume"]
 
