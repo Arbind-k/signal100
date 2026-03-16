@@ -3,7 +3,7 @@ const DEFAULT_API_BASE = "http://127.0.0.1:8000";
 
 const state = {
   stocks: [],
-};
+};4
 
 const elements = {
   apiBaseUrl: document.getElementById("apiBaseUrl"),
