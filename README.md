@@ -8,8 +8,10 @@ Follow these steps in order every time you want to run the app.
 
 Open a terminal and run:
 
+```bash
 cd Backend
 python3 run_pipeline.py
+```
 
 Wait for it to finish before moving on.
 
@@ -19,10 +21,12 @@ Wait for it to finish before moving on.
 
 In a terminal, run:
 
+```bash
 cd /Users/arbindkhaira/Signal100H/signal100-1
 source venv/bin/activate
 cd Backend
 python3 -m uvicorn main:app --reload
+```
 
 Leave this terminal running. You should see:
 `Uvicorn running on http://127.0.0.1:8000`
@@ -33,8 +37,10 @@ Leave this terminal running. You should see:
 
 Open a **new terminal** and run:
 
+```bash
 cd signal100_frontend-2
 pwd
+```
 
 Confirm the path looks correct before continuing.
 
@@ -42,7 +48,9 @@ Confirm the path looks correct before continuing.
 
 ## Step 4 — Start the Frontend Server
 
+```bash
 python3 -m http.server 5500
+```
 
 Leave this terminal running.
 
