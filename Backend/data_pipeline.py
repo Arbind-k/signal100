@@ -40,7 +40,7 @@ def clean_single_stock_file(file_path: Path) -> pd.DataFrame:
 
 
 def load_all_stock_files() -> pd.DataFrame:
-    csv_files = sorted(RAW_DATA_DIR.glob("*.csv"))[:50]
+    csv_files = sorted(RAW_DATA_DIR.glob("*.csv")) # add limit here if need
     if not csv_files:
         raise FileNotFoundError(f"No CSV files found in {RAW_DATA_DIR}")
 
